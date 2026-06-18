@@ -6,6 +6,9 @@ typedef struct Node{
     struct Node* next;
 } Node;
 
+void push(Node **, int);
+void pop(Node **);
+
 int main(void) {
     // Initialize the top of the stack to NULL
     Node *top = NULL;
@@ -16,27 +19,41 @@ int main(void) {
     scanf("%d", &n);
 
     for (int i = 0; i < n; i++) {
-        Node *newNode = (Node*)malloc(sizeof(Node));
-        
-        if (newNode == NULL) {
-            printf("Memory allocation failed\n");
-            return 1;
-        }
-
         printf("Enter element %d: ", i + 1);
-        scanf("%d", &newNode->data);
-        newNode->next = top;
-        top = newNode;
+        int data;
+        scanf("%d", &data);
+        push(&top, data);
     }
 
     // Pop elements from the stack
     printf("Popping elements from the stack:\n");
-    while (top != NULL) {
-        Node *temp = top;
-        printf("%d\n", top->data);
-        top = top->next;
-        free(temp);
+    for (int i = 0; i < n; i++) {
+        pop(&top);
     }
 
     return 0;
+}
+
+void push(Node **top, int data) {
+    Node *newNode = (Node*)malloc(sizeof(Node));
+        
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    newNode->data = data;
+    newNode->next = *top;
+    *top = newNode;
+}
+
+void pop(Node **top) {
+    if (*top == NULL) {
+        printf("Stack underflow\n");
+        return;
+    }
+    Node *temp = *top;
+    printf("%d\n", (*top)->data);
+    *top = (*top)->next;
+    free(temp);
 }
