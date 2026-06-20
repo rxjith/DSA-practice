@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 void sorter(int[], int);
 void bubbleSort(int[], int);
